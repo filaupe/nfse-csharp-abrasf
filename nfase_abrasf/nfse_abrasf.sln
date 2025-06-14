@@ -1,9 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36202.13 d17.14
+VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "abrasfV2_03", "abrasfV2_03\abrasfV2_03.csproj", "{10EE56FC-237F-4511-AD72-363D4168F78F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo", "demo\demo.csproj", "{5D03B030-0D6C-4A70-9323-8762007F24AC}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10EE56FC-237F-4511-AD72-363D4168F78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10EE56FC-237F-4511-AD72-363D4168F78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10EE56FC-237F-4511-AD72-363D4168F78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10EE56FC-237F-4511-AD72-363D4168F78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D03B030-0D6C-4A70-9323-8762007F24AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D03B030-0D6C-4A70-9323-8762007F24AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D03B030-0D6C-4A70-9323-8762007F24AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D03B030-0D6C-4A70-9323-8762007F24AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

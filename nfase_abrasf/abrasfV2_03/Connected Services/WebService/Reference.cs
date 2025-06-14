@@ -1057,7 +1057,8 @@ namespace WebService
         {
             if ((endpointConfiguration == EndpointConfiguration.nfseSOAP))
             {
-                return new System.ServiceModel.EndpointAddress("https://barretos.prefeitura.rlz.com.br/webservice/nfse");
+                //return new System.ServiceModel.EndpointAddress("https://cidadaoonline.barretos.sp.gov.br/webservice/nfse?wsdl"); //Produção
+                return new System.ServiceModel.EndpointAddress("https://barretos.prefeitura.rlz.com.br/webservice/nfse?wsdl"); //Homologação
             }
             throw new System.InvalidOperationException(string.Format("Não foi possível encontrar o ponto de extremidade com o nome \'{0}\'.", endpointConfiguration));
         }
