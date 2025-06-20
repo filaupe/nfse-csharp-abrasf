@@ -42,7 +42,3 @@ A aplicação gera uma requisição `GerarNfse` com dados fictícios e imprime a
 * A biblioteca **não** está preparada para produção – use somente para testes/homologação.
 * Caso deseje apontar para produção, verifique URLs, certificados e políticas da sua prefeitura.
 * Pull requests são bem-vindos!
-
-## Licença
-
-Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
