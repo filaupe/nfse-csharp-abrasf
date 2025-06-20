@@ -3,6 +3,22 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using WebService;
+using System.IO;
+using System.Text.Json;
+
+var secretsPath = Path.Combine(AppContext.BaseDirectory, "secrets.json");
+if (!File.Exists(secretsPath))
+{
+    Console.Error.WriteLine($"Arquivo de segredos não encontrado: {secretsPath}");
+    return;
+}
+
+var secrets = JsonSerializer.Deserialize<Secrets>(File.ReadAllText(secretsPath));
+if (secrets is null)
+{
+    Console.Error.WriteLine("Falha ao ler secrets.json.");
+    return;
+}
 
 string idDec = "Dec_" + 1.ToString();
 string idRps = "Rps_" + 1.ToString();
@@ -37,10 +53,10 @@ var envio = new GerarNfseEnvio
             {
                 CpfCnpj = new tcCpfCnpj
                 {
-                    Item = "11111111111111",
+                    Item = secrets!.Cnpj,
                     ItemElementName = ItemChoiceType.Cnpj
                 },
-                InscricaoMunicipal = "123456"
+                InscricaoMunicipal = secrets!.InscricaoMunicipal
             },
 
             Servico = new tcDadosServico
@@ -91,4 +107,18 @@ static string SerializeToXml<T>(T obj)
     serializer.Serialize(xw, obj, ns);
 
     return sb.ToString();
+}
+
+class Secrets
+{
+    public string Cnpj { get; set; } = string.Empty;
+    public string InscricaoMunicipal { get; set; } = string.Empty;
+    public string RazaoSocial { get; set; } = string.Empty;
+    public Certificado Certificado { get; set; } = new();
+}
+
+class Certificado
+{
+    public string Arquivo { get; set; } = string.Empty;
+    public string Senha { get; set; } = string.Empty;
 }
