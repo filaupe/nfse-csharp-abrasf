@@ -3,7 +3,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using WebService;
-using System.IO;
 using System.Text.Json;
 
 var secretsPath = Path.Combine(AppContext.BaseDirectory, "secrets.json");
@@ -20,9 +19,6 @@ if (secrets is null)
     return;
 }
 
-string idDec = "Dec_" + 1.ToString();
-string idRps = "Rps_" + 1.ToString();
-
 var cabecalho = new cabecalho
 {
     versao = "2.03",
@@ -34,18 +30,16 @@ var envio = new GerarNfseEnvio
     {
         InfDeclaracaoPrestacaoServico = new tcInfDeclaracaoPrestacaoServico()
         {
-            Id = idDec,
             Rps = new tcInfRps()
             {
-                Id = idRps,
                 IdentificacaoRps = new tcIdentificacaoRps
                 {
-                    Numero = "1",
+                    Numero = "5",
                     Serie = "UNI",
                     Tipo = 1
                 },
                 DataEmissao = DateTime.Today,
-                Status = 1
+                Status = 1,
             },
 
             Competencia = DateTime.Today,
@@ -54,26 +48,67 @@ var envio = new GerarNfseEnvio
                 CpfCnpj = new tcCpfCnpj
                 {
                     Item = secrets!.Cnpj,
-                    ItemElementName = ItemChoiceType.Cnpj
+                    ItemElementName = ItemChoiceType.Cnpj,
                 },
                 InscricaoMunicipal = secrets!.InscricaoMunicipal
             },
 
             Servico = new tcDadosServico
-            {
+            { 
                 Valores = new tcValoresDeclaracaoServico
                 {
-                    ValorServicos = 100.00m
+                    ValorServicos = 100.00m,
+
+                    // ▶ Alíquota obrigatória:
+                    Aliquota = 2m,           
+                    AliquotaSpecified = true,
+
+                    // ▶ Valor ISS – Barretos exige declarar mesmo para Simples.
+                    //   Se seu contador disser que deve estar zerado, use 0m.
+                    ValorIss = 2.00m,           // 100 × 2 %  (exemplo)
+                    ValorIssSpecified = true,
                 },
-                IssRetido = 2,        // 1=Sim, 2=Não
-                ItemListaServico = tsItemListaServico.Item0107,
+
+                IssRetido = 2,
+                ItemListaServico = tsItemListaServico.Item0501,
                 Discriminacao = "Serviço de consultoria em TI",
-                CodigoMunicipio = 3550308, // São Paulo / IBGE
-                ExigibilidadeISS = 1         // 1 = Exigível
+                CodigoMunicipio = 3550308,
+                ExigibilidadeISS = 1
             },
 
-            OptanteSimplesNacional = 2,        // 1=Sim, 2=Não
+            OptanteSimplesNacional = 1,        // 1=Sim, 2=Não
             IncentivoFiscal = 2,         // 1=Sim, 2=Não
+
+            Tomador = new tcDadosTomador
+            {
+                IdentificacaoTomador = new tcIdentificacaoTomador
+                {
+                    CpfCnpj = new tcCpfCnpj
+                    {
+                        Item = "12345678000195",    // CNPJ do tomador
+                        ItemElementName = ItemChoiceType.Cnpj
+                    },
+                },
+                RazaoSocial = "Empresa Cliente Ltda",
+                Endereco = new tcEndereco
+                {
+                    Endereco = "Rua das Flores",
+                    Numero = "100",
+                    Complemento = "Sala 45",
+                    Bairro = "Centro",
+                    CodigoMunicipio = 3550308,    // São Paulo
+                    CodigoMunicipioSpecified = true,
+                    Uf = tsUf.SP,
+                    UfSpecified = true,
+                    Cep = "01234567",
+                    CodigoPais = "1058"    // Brasil
+                },
+                Contato = new tcContato
+                {
+                    Telefone = "11987654321",
+                    Email = "contato@empresacliente.com.br"
+                }
+            },
         },
     }
 };
